@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BANK AI AGENT</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .main-container {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+    }
+    .header {
+      width: 100%;
+      max-width: 700px;
+      margin-top: 40px;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(255,255,255,0.7);
+      border-radius: 24px 24px 0 0;
+      box-shadow: 0 8px 32px #b0c4de55;
+      padding: 32px 24px 16px 24px;
+      position: relative;
+    }
+    h1 {
+      color: #1976d2;
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      font-weight: 800;
+      text-shadow: 0 2px 8px #b0c4de33;
+    }
+    .subtitle {
+      text-align: center;
+      color: #43cea2;
+      font-size: 1.15rem;
+      margin-bottom: 0;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+    .nav-bar {
+      width: 100%;
+      max-width: 700px;
+      display: flex;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.6);
+      box-shadow: 0 2px 12px #b0c4de22;
+      border-radius: 0 0 18px 18px;
+      padding: 12px 18px 8px 18px;
+      margin-bottom: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .nav-btn {
+      flex: 1;
+      margin: 0 6px;
+      padding: 12px 0;
+      border-radius: 10px;
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      background: linear-gradient(90deg, #1976d2 60%, #43cea2 100%);
+      box-shadow: 0 2px 8px #b0c4de22;
+      transition: background 0.2s, transform 0.2s;
+      outline: none;
+      opacity: 0.92;
+    }
+    .nav-btn.active {
+      background: linear-gradient(90deg, #43cea2 60%, #1976d2 100%);
+      color: #1976d2;
+      transform: scale(1.06);
+      box-shadow: 0 4px 16px #43cea244;
+      opacity: 1;
+    }
+    .content {
+      width: 100%;
+      max-width: 700px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 0 0 24px 24px;
+      box-shadow: 0 8px 32px #b0c4de33;
+      padding: 32px 24px 24px 24px;
+      min-height: 320px;
+      margin-bottom: 32px;
+    }
+    .qa {
+      margin-bottom: 28px;
+      padding: 22px 18px 18px 18px;
+      background: rgba(240,248,255,0.95);
+      border-radius: 16px;
+      box-shadow: 0 2px 12px #b0c4de22;
+      border-left: 5px solid #43cea2;
+      transition: box-shadow 0.2s;
+    }
+    .qa:hover {
+      box-shadow: 0 6px 24px #43cea244;
+    }
+    .question {
+      color: #1976d2;
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 1.08rem;
+    }
+    .answer {
+      color: #333;
+      margin-left: 8px;
+      font-size: 1.01rem;
+    }
+    .footer {
+      text-align: center;
+      color: #1976d2;
+      font-size: 1.08rem;
+      margin-top: 18px;
+      letter-spacing: 1.1px;
+      font-weight: 600;
+      opacity: 0.85;
+      background: rgba(255,255,255,0.7);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #b0c4de22;
+      padding: 16px 0 10px 0;
+      width: 100vw;
+      max-width: 700px;
+      margin-bottom: 0;
+    }
+    @media (max-width: 800px) {
+      .main-container, .header, .nav-bar, .content, .footer {
+        max-width: 98vw;
+        padding-left: 2vw;
+        padding-right: 2vw;
+      }
+      .header, .content, .footer {
+        border-radius: 18px;
+      }
+    }
+    @media (max-width: 600px) {
+      .header, .content, .footer {
+        padding: 18px 6px 12px 6px;
+      }
+      .nav-bar {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 4px 6px 4px;
+      }
+      .nav-btn {
+        margin: 4px 0;
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="header">
+      <h1>BANK AI AGENT</h1>
+      <div class="subtitle">Attending to Common Banking Questions</div>
+    </div>
+    <div class="nav-bar">
+      <button id="accountBtn" class="nav-btn" onclick="showSection('account')">🔐 ACCOUNT & SECURITY</button>
+      <button id="cardsBtn" class="nav-btn" onclick="showSection('cards')">💳 CARDS & PAYMENTS</button>
+      <button id="balanceBtn" class="nav-btn" onclick="showSection('balance')">💰 BALANCE & TRANSFERS</button>
+      <button id="loansBtn" class="nav-btn" onclick="showSection('loans')">📈 LOANS & SAVINGS</button>
+      <button id="supportBtn" class="nav-btn" onclick="showSection('support')">🧾 STATEMENT & SUPPORT</button>
+    </div>
+    <div class="content" id="qaSection"></div>
+    <div class="footer">Powered by I.TEE CONCEPT GLOBAL (I.TEC)</div>
+  </div>
+  <script>
+    const qaData = {
+      account: [
+        {q: 'How do I open a new account?', a: 'You can open a new savings or current account online through our website or visit the nearest branch with your valid ID, passport photo, and utility bill.'},
+        {q: 'I forgot my password. What do I do?', a: 'Click “Forgot Password” on the login page or dial *123# and follow the prompts to reset it securely.'},
+        {q: 'How do I block my ATM card?', a: 'Dial 123911# from your registered phone number or use the mobile app → Cards → Block Card.'}
+      ],
+      cards: [
+        {q: 'How do I request a new ATM card?', a: 'You can request a new debit card on the mobile app or by visiting any of our branches. Delivery takes 3–5 working days.'},
+        {q: 'Why was my card declined?', a: 'Card may be declined due to insufficient balance, expired card, daily limit reached, or fraud block. Please check in the app or call support.'},
+        {q: 'Can I use my card internationally?', a: 'Yes, but you need to activate international transactions from the mobile app under “Card Settings.”'}
+      ],
+      balance: [
+        {q: 'How do I check my balance?', a: 'Dial 1230# or log into the mobile app or internet banking.'},
+        {q: 'How do I transfer money to another bank?', a: 'Use the mobile app → Transfer → Other Banks, or dial 123amount*account number# and follow the prompts.'},
+        {q: 'I sent money to the wrong account. What should I do?', a: 'Please call our support center immediately on 0800-123-456. We\'ll assist with a reversal if the funds are intact.'}
+      ],
+      loans: [
+        {q: 'How can I apply for a loan?', a: 'You can apply via the app under “Loans” or visit a branch. Basic requirements include valid ID, steady income, and good credit score.'},
+        {q: 'What is the interest rate on savings?', a: 'Our standard savings account offers up to 4% annual interest. Higher rates are available for fixed deposits.'},
+        {q: 'Can I save with a target or plan?', a: 'Yes! Use our “Target Savings” on the app to set a goal amount and timeline. No penalty for early withdrawal.'}
+      ],
+      support: [
+        {q: 'How do I get my account statement?', a: 'On the mobile app, go to Menu → Statements → Choose date range → Download or email.'},
+        {q: 'Can I speak to a customer care agent?', a: 'Yes, you can call us at 0800-123-456 or chat with a live agent via the app 24/7.'}
+      ]
+    };
+    function showSection(section) {
+      const qa = qaData[section] || [];
+      let html = '';
+      let toRead = '';
+      qa.forEach((item, idx) => {
+        html += `<div class='qa'><div class='question'>Q: ${item.q}</div><div class='answer'>A: ${item.a}</div></div>`;
+        toRead += `Question: ${item.q}. Answer: ${item.a}. `;
+      });
+      document.getElementById('qaSection').innerHTML = html;
+      // Highlight active nav button
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      const btnId = section + 'Btn';
+      const btn = document.getElementById(btnId);
+      if (btn) btn.classList.add('active');
+      // Read aloud all Q&A in the section with a lady voice
+      if ('speechSynthesis' in window && toRead) {
+        const utter = new SpeechSynthesisUtterance(toRead);
+        utter.lang = 'en-US';
+        // Try to select a female voice
+        const voices = window.speechSynthesis.getVoices();
+        const lady = voices.find(v => v.lang.startsWith('en') && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('woman') || v.name.toLowerCase().includes('susan') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('emma') || v.name.toLowerCase().includes('linda') || v.name.toLowerCase().includes('samantha')));
+        if (lady) utter.voice = lady;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utter);
+      }
+    }
+    // Show ACCOUNT & SECURITY by default
+    showSection('account');
+  </script>
+</body>
+</html>
